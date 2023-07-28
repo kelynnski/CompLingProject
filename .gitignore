@@ -2,5 +2,6 @@ venv/
 .idea/
 tests/__pycache__/
 app/__pycache__/
+db/__pycache__/
 
 
