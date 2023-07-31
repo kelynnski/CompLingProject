@@ -14,53 +14,49 @@ class MySQLRepository(Repository):
             'database': 'words'
         }
         self.connection = mysql.connector.connect(**config)
+        print("Database connected.")
         self.cursor = self.connection.cursor()
+        print("Cursor established")
 
-    def __del__(self):
-        self.cursor.close()
-        self.connection.close()
-
-"""
-    def map_pos(self, entry: dict) -> PartOfSpeech:
-        pos_switcher = {
-            'adjective': PartOfSpeech.ADJECTIVE,
-            'adposition': PartOfSpeech.ADPOSITION,
-            'adverb': PartOfSpeech.ADVERB,
-            'auxiliary': PartOfSpeech.AUXILIARY,
-            'coor. conjunction': PartOfSpeech.C_CONJUNCTION,
-            'determiner' = PartOfSpeech.DETERMINER,
-            'interjection': PartOfSpeech.INTERJECTION,
-            'noun': PartOfSpeech.NOUN,
-            'numeral': PartOfSpeech.NUMERAL,
-            'particle': PartOfSpeech.PARTICLE,
-            'pronoun': PartOfSpeech.PRONOUN,
-            'proper noun': PartOfSpeech.PROPER_NOUN,
-            'punctuation': PartOfSpeech.PUNCTUATION,
-            'sub. conjunction': PartOfSpeech.S_CONJUNCTION,
-            'symbol': PartOfSpeech.SYMBOL,
-            'verb': PartOfSpeech.VERB,
-            'other': PartOfSpeech.OTHER
-        }
-        pos = pos_switcher.get(entry.get('pos'), None)
-        return pos
-"""
+    def close(self):
+        if self.cursor:
+            self.cursor.close()
+        if self.connection:
+            self.connection.close()
 
 
-def load_germanword(self):
-    sql = 'SELECT * FROM german_words'
-    self.cursor.execute(sql)
-    entries = [{'id': id,
-                'word': word,
-                'lang': lang,
-                'pos': pos,
-                'english_translation': english_translation,
-                'ex_sentence': ex_sentence,
-                'synonyms': synonyms,
-                'number': number,
-                'gender': gender,
-                'tense': tense,
-                'person': person
-                } for (id, word, lang, pos, english_translation, ex_sentence,
-                       synonyms, number, gender, tense, person) in self.cursor]
-    words = [self.mapper(entry) for entry in entries]
-    return words
+    def mapper(self, entry):
+        return entry
+
+
+    def load_germanword(self):
+        sql = 'SELECT * FROM german_words'
+        self.cursor.execute(sql)
+
+        # Get all the rows
+        fetched_rows = list(self.cursor)
+        print("Fetched rows:", fetched_rows)
+
+        # Create a list to hold the entries
+        entries = []
+
+        # Convert each row into a dictionary
+        for row in fetched_rows:
+            entry = {
+                'id': row[0],
+                'word': row[1],
+                'lang': row[2],
+                'pos': row[3],
+                'english_translation': row[4],
+                'ex_sentence': row[5],
+                'synonyms': row[6],
+                'number': row[7],
+                'gender': row[8],
+                'tense': row[9],
+                'person': row[10]
+            }
+            entries.append(entry)
+
+        print("Processed entries:", entries)
+        return entries
+

@@ -20,7 +20,7 @@ INSERT INTO german_words
     (word, lang, pos, english_translation, ex_sentence, synonyms, number, gender, tense, person)
 VALUES
     ('laufen', '0', 'VERB', 'to walk', 'Wir laufen schnell', 'rennen, sprinten, stieben', NULL, NULL, 'PRESENT', 'Wir, Sie/sie'),
-    ('Wasser', '0', 'NOUN', 'water', 'Ich trinke gerne Wasser'), 'Aqua, H2O, blaues Gold', 'SINGULAR', 'NEU', NULL, NULL);
+    ('Wasser', '0', 'NOUN', 'water', 'Ich trinke gerne Wasser', 'Aqua, H2O, blaues Gold', 'SINGULAR', 'NEU', NULL, NULL);
 
 
 CREATE TABLE english_words (
@@ -32,7 +32,7 @@ CREATE TABLE english_words (
     );
 
 INSERT INTO english_words
-    (word, language, german_translation)
+    (word, lang, german_translation)
 VALUES
-    ('walk', '1', 'laufen')
+    ('walk', '1', 'laufen'),
     ('water', '1', 'Wasser');

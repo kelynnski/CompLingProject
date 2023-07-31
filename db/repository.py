@@ -4,13 +4,13 @@ from app.englishword import *
 from app import word
 
 
-class Repository:
+class Repository(metaclass=abc.ABCMeta):
 
     def load_word(self):
         raise NotImplementedError
 
     def load_germanword(self):
-        raise NotImplementedError
+        pass
 
     def load_englishword(self):
         raise NotImplementedError
