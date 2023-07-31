@@ -9,8 +9,8 @@ class MySQLRepository(Repository):
         config = {
             'user': 'root',
             'password': 'root',
-            'host': 'localhost',  # to run on git this should be 'db'
-            'port': '32000',  # to run on git this should be '3306'
+            'host': 'localhost',  # to run on local this should be localhost
+            'port': '32000',  # to run on git this should be '32000'
             'database': 'words'
         }
         self.connection = mysql.connector.connect(**config)
@@ -45,12 +45,13 @@ class MySQLRepository(Repository):
         return pos
 """
 
-def load_germanwords(self):
+
+def load_germanword(self):
     sql = 'SELECT * FROM german_words'
     self.cursor.execute(sql)
     entries = [{'id': id,
                 'word': word,
-                'language': language,
+                'lang': lang,
                 'pos': pos,
                 'english_translation': english_translation,
                 'ex_sentence': ex_sentence,
@@ -59,7 +60,7 @@ def load_germanwords(self):
                 'gender': gender,
                 'tense': tense,
                 'person': person
-                } for (id, word, language, pos, english_translation, ex_sentence,
+                } for (id, word, lang, pos, english_translation, ex_sentence,
                        synonyms, number, gender, tense, person) in self.cursor]
     words = [self.mapper(entry) for entry in entries]
     return words

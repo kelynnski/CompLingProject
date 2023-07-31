@@ -5,6 +5,7 @@ from app import word
 
 
 class Repository:
+
     def load_word(self):
         raise NotImplementedError
 
