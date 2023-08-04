@@ -3,5 +3,6 @@ venv/
 tests/__pycache__/
 app/__pycache__/
 db/__pycache__/
+services/__pycache__/
 
 
