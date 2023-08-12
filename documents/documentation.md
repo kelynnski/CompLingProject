@@ -18,7 +18,7 @@ German synonyms for the word, etc. as a JSON string. For example, if a user ente
 
 
 The API can be used without going through the front end using a POST request, with the endpoint
-'http://localhost:5000/get_word'. The JSON body needs to have the "word" key, for example:
+'http://localhost:5000/'. The JSON body needs to have the "word" key, for example:
 
 {"word":"Wasser"}
 
@@ -26,4 +26,4 @@ The API can be used without going through the front end using a POST request, wi
 Users can also provide an English word into the second interface, and get the same information as described
 above about the translated word.
 
-The endpoint for this API is 'http://localhost:5000/get_translation' and also requires a JSON body with the 'word' key.
+The endpoint for this API is the same 'http://localhost:5000' and also requires a JSON body with the 'word' key.
