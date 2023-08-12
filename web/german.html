@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>German Lexical Information</title>
+</head>
+<body>
+
+<h1>German Lexical Information</h1>
+
+<h2>Enter a word in German</h2>
+
+<form id="form1">
+    <div class="input-group">
+        <label for="word">Word: </label>
+        <input id ="word" name="word" type="text"/>
+    </div>
+    <button type="submit" value="germanword">Submit</button>
+</form>
+
+<h2>Response: </h2>
+<pre id="response"></pre>
+
+<h2>Enter a word in English</h2>
+
+<form id="form2">
+    <div class="input-group">
+        <label for="word2">Word: </label>
+        <input id ="word2" name="word2" type="text"/>
+    </div>
+    <button type="submit" value="englishword">Submit</button>
+</form>
+
+<h2>Response: </h2>
+<pre id="response2"></pre>
+
+</body>
+
+<script>
+async function handleSubmit1(event) {
+    event.preventDefault();
+
+    const data = new FormData(event.target);
+    const value = Object.fromEntries(data.entries());
+    value.word = data.get("word");
+    console.log({value});
+
+    const response = await fetch('http://localhost:5000/get_word', {
+    method: 'POST',
+    body: JSON.stringify(value),
+    headers: {
+        'Content-Type': 'application/json',
+    }
+});
+    const myJson = await response.json();
+    console.log(myJson);
+    document.getElementById('response').textContent = JSON.stringify(myJson, undefined, 2);
+}
+const form1 = document.getElementById("form1");
+form1.addEventListener("submit", async (e) => handleSubmit1(e), false);
+
+async function handleSubmit2(event) {
+    event.preventDefault();
+
+    const data = new FormData(event.target);
+    const value = Object.fromEntries(data.entries());
+    value.word = data.get("word2");
+    console.log({value});
+
+    const response2 = await fetch('http://localhost:5000/get_translation', {
+    method: 'POST',
+    body: JSON.stringify(value),
+    headers: {
+        'Content-Type': 'application/json',
+    }
+});
+    const myJson = await response2.json();
+    console.log(myJson);
+    document.getElementById('response2').textContent = JSON.stringify(myJson, undefined, 2);
+}
+const form2 = document.getElementById("form2");
+form2.addEventListener("submit", async (e) => handleSubmit2(e), false);
+</script>
+</html>

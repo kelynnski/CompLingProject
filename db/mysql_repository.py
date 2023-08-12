@@ -49,7 +49,9 @@ class MySQLRepository(Repository):
                 'person': row[10]
             }
             word = self.mapper(entry)
-            return word
+            relevant_items = ['pos', 'english_translation', 'ex_sentence', 'synonyms', 'number', 'gender', 'tense', 'person']
+            required_info = {key: word[key] for key in relevant_items if key in word}
+            return required_info
         return None
 
     def translate_english_word(self, word_to_fetch):
@@ -72,5 +74,9 @@ class MySQLRepository(Repository):
                 'person': row[10]
             }
             word = self.mapper(entry)
-            return word
+            relevant_items = ['word', 'pos', 'ex_sentence', 'synonyms', 'number', 'gender', 'tense', 'person']
+            required_info = {key: word[key] for key in relevant_items if key in word}
+            rename_word = 'german_translation'
+            required_info[rename_word] = required_info.pop('word')
+            return required_info
         return None
